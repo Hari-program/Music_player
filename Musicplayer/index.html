@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora - Premium Music Experience</title>
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium Loader -->
+    <div id="loader" class="loader-container">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <i class="fa-solid fa-circle-nodes pulse-glow"></i>
+                <span>AURORA</span>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <p class="loader-text">Loading your premium audio experience...</p>
+        </div>
+    </div>
+
+    <!-- Animated Aurora Background -->
+    <div class="aurora-bg">
+        <div class="blob blob-purple"></div>
+        <div class="blob blob-blue"></div>
+        <div class="blob blob-pink"></div>
+        <div class="blob blob-cyan"></div>
+    </div>
+
+    <!-- Main Glass App Container -->
+    <main class="app-container" id="app-container">
+        <!-- Sidebar Playlist -->
+        <aside class="sidebar-panel">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i class="fa-solid fa-circle-nodes logo-icon"></i>
+                    <h2>AURORA</h2>
+                </div>
+                <div class="upload-btn-wrapper">
+                    <button class="btn-icon upload-btn" title="Add your local music">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <input type="file" id="local-file-input" multiple accept="audio/*">
+                </div>
+            </div>
+
+            <!-- Search Area -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-tracks" placeholder="Search playlist or library...">
+            </div>
+
+            <!-- Playlist Navigation -->
+            <div class="playlist-nav">
+                <span class="active-tab"><i class="fa-solid fa-music"></i> Library Playlist</span>
+            </div>
+
+            <!-- Scrollable Playlist Container -->
+            <div class="playlist-container" id="playlist-list">
+                <!-- Dynamically generated items will be injected here -->
+            </div>
+
+            <!-- Settings / Sidebar Footer -->
+            <div class="sidebar-footer">
+                <button class="btn-text" id="settings-trigger">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Quick Controls Info</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Player Window -->
+        <section class="main-player">
+            <!-- Top Controls/Header -->
+            <header class="player-header">
+                <button class="btn-icon" id="toggle-sidebar" title="Toggle Playlist">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="now-playing-label">
+                    <span>NOW PLAYING</span>
+                </div>
+                <button class="btn-icon" id="btn-theme-info" title="Audio Info">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+            </header>
+
+            <!-- Album Artwork & Audio Visualizer Screen -->
+            <div class="artwork-container">
+                <!-- Glass Ring -->
+                <div class="artwork-ring">
+                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=600&auto=format&fit=crop" alt="Album Cover" id="album-art" class="album-art animate-rotation paused">
+                </div>
+
+                <!-- Canvas Equalizer overlaid perfectly -->
+                <canvas id="visualizer" class="visualizer-canvas"></canvas>
+            </div>
+
+            <!-- Track Info -->
+            <div class="track-details">
+                <h1 id="track-title" class="track-title">Midnight Dreams</h1>
+                <p id="track-artist" class="track-artist">Aurora Synthwave</p>
+                <p id="track-album" class="track-album">Retro Resonance EP</p>
+            </div>
+
+            <!-- Audio Waveform / Progress Slider Container -->
+            <div class="progress-section">
+                <div class="time-display">
+                    <span id="current-time">00:00</span>
+                    <span id="total-time">00:00</span>
+                </div>
+                <div class="progress-bar-container" id="progress-container">
+                    <div class="progress-bar-glow"></div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                        <div class="progress-bar-handle" id="progress-handle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Playback Control Panel -->
+            <div class="controls-section">
+                <!-- Left Secondary Controls -->
+                <div class="secondary-controls-left">
+                    <button class="btn-secondary" id="btn-shuffle" title="Shuffle Tracks">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="btn-secondary" id="btn-loop" title="Loop Mode">
+                        <i class="fa-solid fa-repeat"></i>
+                        <span class="loop-indicator">All</span>
+                    </button>
+                </div>
+
+                <!-- Core Playback Buttons -->
+                <div class="core-controls">
+                    <button class="btn-primary btn-prev" id="btn-prev" title="Previous Track">
+                        <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button class="btn-primary btn-play-pause pulse-glow" id="btn-play-pause" title="Play">
+                        <i class="fa-solid fa-play play-icon"></i>
+                    </button>
+                    <button class="btn-primary btn-next" id="btn-next" title="Next Track">
+                        <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                </div>
+
+                <!-- Right Secondary Controls (Volume) -->
+                <div class="secondary-controls-right">
+                    <div class="volume-container">
+                        <button class="btn-secondary" id="btn-volume" title="Mute/Unmute">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                        <div class="volume-slider-wrapper">
+                            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8">
+                            <div class="volume-slider-fill" id="volume-fill"></div>
+                        </div>
+                        <span id="volume-percentage" class="volume-percentage">80%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Settings/Shortcut Info Modal -->
+    <div class="modal-overlay" id="info-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-nodes"></i> Keyboard Shortcuts</h3>
+                <button class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <table class="shortcuts-table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="key-badge">Space</span></td>
+                            <td>Play / Pause Toggle</td>
+                        </tr>
+                        <tr>
+                            <td><span class="key-badge">←</span> (Left Arrow)</td>
+                            <td>Previous Track</td>
+                        </tr>
+                        <tr>
+                            <td><span class="key-badge">→</span> (Right Arrow)</td>
+                            <td>Next Track</td>
+                        </tr>
+                        <tr>
+                            <td><span class="key-badge">↑</span> (Up Arrow)</td>
+                            <td>Volume Up (5%)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="key-badge">↓</span> (Down Arrow)</td>
+                            <td>Volume Down (5%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-tip">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Did you know? You can upload your own offline audio files (.mp3, .wav, etc.) using the "+" icon in the sidebar!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Hidden native audio element -->
+    <audio id="main-audio" crossorigin="anonymous"></audio>
+
+    <!-- JS Logic -->
+    <script src="script.js"></script>
+</body>
+</html>
